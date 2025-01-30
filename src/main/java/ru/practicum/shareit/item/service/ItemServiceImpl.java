@@ -38,14 +38,22 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto updateItem(Long id, ItemDto itemDto) {
-        Item item = items.get(id);
+    public ItemDto updateItem(Long ownerId, Long itemId, ItemDto itemDto) {
+        Item item = items.get(itemId);
         if (item == null) {
             throw new NoSuchElementException("Item not found");
         }
+
+        // ✅ Проверяем, что обновляет именно владелец вещи
+        if (!item.getOwnerId().equals(ownerId)) {
+            throw new NoSuchElementException("User is not the owner of this item");
+        }
+
+        // ✅ Обновляем только переданные параметры
         if (itemDto.getName() != null) item.setName(itemDto.getName());
         if (itemDto.getDescription() != null) item.setDescription(itemDto.getDescription());
         if (itemDto.getAvailable() != null) item.setAvailable(itemDto.getAvailable());
+
         return ItemMapper.toItemDto(item);
     }
 

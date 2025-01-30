@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
             throw new NoSuchElementException("User not found");
         }
 
-        // Если email меняется, проверяем его уникальность
+        // Если email передан и отличается, проверяем уникальность
         if (userDto.getEmail() != null && !userDto.getEmail().equals(existingUser.getEmail())) {
             if (emailExists(userDto.getEmail())) {
                 throw new IllegalStateException("Email уже используется другим пользователем");
@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
             existingUser.setEmail(userDto.getEmail());
         }
 
+        // Если имя передано, обновляем его
         if (userDto.getName() != null) {
             existingUser.setName(userDto.getName());
         }
