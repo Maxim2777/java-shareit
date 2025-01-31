@@ -42,14 +42,7 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalStateException("Item is not available for booking");
         }
 
-        Booking booking = Booking.builder()
-                .id(nextId++)
-                .start(bookingDto.getStart())
-                .end(bookingDto.getEnd())
-                .item(item)
-                .booker(booker)
-                .status(BookingStatus.WAITING)
-                .build();
+        Booking booking = BookingMapper.toBooking(bookingDto, item, booker, nextId++);
 
         bookings.put(booking.getId(), booking);
         return BookingMapper.toBookingDto(booking);
