@@ -8,7 +8,6 @@ import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.service.UserService;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,12 +26,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         // Получаем UserDto и конвертируем в User
         User user = UserMapper.toUser(userService.getUser(userId));
 
-        ItemRequest request = ItemRequest.builder()
-                .id(nextId++)
-                .description(itemRequestDto.getDescription())
-                .requestor(user)
-                .created(LocalDateTime.now())
-                .build();
+        ItemRequest request = ItemRequestMapper.toItemRequest(itemRequestDto, user, nextId++);
 
         requests.put(request.getId(), request);
         return ItemRequestMapper.toItemRequestDto(request);
