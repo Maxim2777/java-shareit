@@ -14,16 +14,6 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class ErrorHandler {
 
-    // Формируем JSON-ответ
-    private ResponseEntity<Map<String, Object>> createErrorResponse(HttpStatus status, Object message) {
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("status", status.value());
-        errorResponse.put("error", status.getReasonPhrase());
-        errorResponse.put("message", message);
-        errorResponse.put("timestamp", System.currentTimeMillis());
-        return new ResponseEntity<>(errorResponse, status);
-    }
-
     // Обработка ошибок валидации (@NotBlank, @NotNull, @Valid)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException e) {
@@ -57,6 +47,14 @@ public class ErrorHandler {
     public ResponseEntity<Map<String, Object>> handleOtherExceptions(Exception e) {
         return createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error: " + e.getMessage());
     }
+
+    // Формируем JSON-ответ
+    private ResponseEntity<Map<String, Object>> createErrorResponse(HttpStatus status, Object message) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", status.value());
+        errorResponse.put("error", status.getReasonPhrase());
+        errorResponse.put("message", message);
+        errorResponse.put("timestamp", System.currentTimeMillis());
+        return new ResponseEntity<>(errorResponse, status);
+    }
 }
-
-
