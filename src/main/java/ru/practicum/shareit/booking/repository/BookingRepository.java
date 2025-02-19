@@ -33,7 +33,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByItem_Owner_IdAndStartAfterOrderByStartDesc(Long ownerId, LocalDateTime now);
 
-    // 🔹 Проверка, завершал ли пользователь бронирование вещи
+    // Проверка, завершал ли пользователь бронирование вещи
     @Query("SELECT COUNT(b) > 0 FROM Booking b " +
             "WHERE b.booker.id = :bookerId " +
             "AND b.item.id = :itemId " +
@@ -41,9 +41,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "AND b.status = 'APPROVED'")
     boolean existsByBookerIdAndItemIdAndEndBefore(Long bookerId, Long itemId, LocalDateTime now);
 
-    // 🔹 Найти последнее бронирование для вещи (ближайшее к текущему времени в прошлом)
+    // Найти последнее бронирование для вещи (ближайшее к текущему времени в прошлом)
     Optional<Booking> findTopByItem_IdAndStartBeforeAndStatusOrderByEndDesc(Long itemId, LocalDateTime now, BookingStatus status);
 
-    // 🔹 Найти следующее бронирование для вещи (ближайшее к текущему времени в будущем)
+    // Найти следующее бронирование для вещи (ближайшее к текущему времени в будущем)
     Optional<Booking> findTopByItem_IdAndStartAfterAndStatusOrderByStartAsc(Long itemId, LocalDateTime now, BookingStatus status);
 }

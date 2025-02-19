@@ -23,13 +23,13 @@ public class BookingDto {
     private Long itemId;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private ItemDto item; // ✅ Добавили объект `item`, но он может быть `null`
+    private ItemDto item;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long bookerId;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private UserDto booker; // ✅ Добавили объект `booker`, но он может быть `null`
+    private UserDto booker;
 
     private BookingStatus status;
 

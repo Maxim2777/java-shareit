@@ -13,18 +13,18 @@ public class CommentMapper {
         return CommentDto.builder()
                 .id(comment.getId())
                 .text(comment.getText())
-                .authorName(comment.getAuthor().getName()) // 🔹 Передаём имя автора комментария
+                .authorName(comment.getAuthor().getName()) // Передаём имя автора комментария
                 .created(comment.getCreated())
                 .build();
     }
 
     public static Comment toComment(CommentDto commentDto, Item item, User author) {
         return Comment.builder()
-                .id(null) // 🔹 JPA сам назначит ID
+                .id(null)
                 .text(commentDto.getText())
                 .item(item)
                 .author(author)
-                .created(LocalDateTime.now()) // 🔹 Устанавливаем время создания тут
+                .created(LocalDateTime.now()) // Устанавливаем время создания
                 .build();
     }
 }

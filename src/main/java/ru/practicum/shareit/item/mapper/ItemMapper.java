@@ -36,7 +36,7 @@ public class ItemMapper {
                         .id(nextBooking.getId())
                         .bookerId(nextBooking.getBooker().getId())
                         .build() : null)
-                .comments(comments)  // 🔹 Добавляем комментарии
+                .comments(comments)  // Добавляем комментарии
                 .build();
     }
 
@@ -46,7 +46,7 @@ public class ItemMapper {
                 .name(itemDto.getName())
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
-                .owner(owner)  // Передаём объект User вместо ownerId
+                .owner(owner)
                 .requestId(itemDto.getRequestId())
                 .build();
     }

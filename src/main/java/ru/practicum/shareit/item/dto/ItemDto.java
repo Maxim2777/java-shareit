@@ -26,7 +26,7 @@ public class ItemDto {
 
     private Long requestId;
 
-    private BookingShortDto lastBooking; // 🔹 Последнее бронирование
-    private BookingShortDto nextBooking; // 🔹 Следующее бронирование
-    private List<CommentDto> comments;   // 🔹 Отзывы пользователей
+    private BookingShortDto lastBooking; // Последнее бронирование
+    private BookingShortDto nextBooking; // Следующее бронирование
+    private List<CommentDto> comments;   // Отзывы пользователей
 }

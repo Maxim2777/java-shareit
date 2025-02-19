@@ -7,7 +7,7 @@ import ru.practicum.shareit.user.model.User;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comments") // 🔹 Связываем с таблицей "comments" в БД
+@Table(name = "comments") // Связываем с таблицей "comments" в БД
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,20 +16,20 @@ import java.time.LocalDateTime;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 🔹 Авто-инкрементное поле
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Авто-инкрементное поле
     private Long id;
 
     @Column(nullable = false)
-    private String text; // 🔹 Текст комментария
+    private String text; // Текст комментария
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
-    private Item item; // 🔹 Вещь, к которой оставили комментарий
+    private Item item; // Вещь, к которой оставили комментарий
 
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
-    private User author; // 🔹 Автор комментария
+    private User author; // Автор комментария
 
     @Column(nullable = false)
-    private LocalDateTime created; // 🔹 Дата и время создания комментария
+    private LocalDateTime created; // Дата и время создания комментария
 }

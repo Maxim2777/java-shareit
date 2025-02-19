@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    // 🔹 Найти все вещи, принадлежащие конкретному владельцу
+    // Найти все вещи, принадлежащие конкретному владельцу
     List<Item> findByOwnerId(Long ownerId);
 
     @Query("SELECT i FROM Item i " +

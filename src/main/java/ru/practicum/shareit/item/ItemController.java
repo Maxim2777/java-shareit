@@ -16,7 +16,7 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
-    private final CommentService commentService; // 🔹 Добавляем CommentService
+    private final CommentService commentService;
 
     @PostMapping
     public ItemDto addItem(@RequestHeader(value = "X-Sharer-User-Id", required = true) Long ownerId,
@@ -47,7 +47,7 @@ public class ItemController {
         return itemService.searchItems(text);
     }
 
-    // 🔹 Добавляем эндпоинт для создания комментария
+    // Эндпоинт для создания комментария
     @PostMapping("/{itemId}/comment")
     public CommentDto addComment(@RequestHeader("X-Sharer-User-Id") Long userId,
                                  @PathVariable Long itemId,
