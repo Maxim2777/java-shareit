@@ -30,6 +30,18 @@ public class ErrorHandler {
         return createErrorResponse(HttpStatus.BAD_REQUEST, "Missing required header: " + e.getHeaderName());
     }
 
+    // Обработка ошибки некорректного `state` в бронированиях (400 Bad Request)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(IllegalArgumentException e) {
+        return createErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
+    // Обработка 403 Forbidden (если не владелец вещи пытается подтвердить бронирование)
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<Map<String, Object>> handleForbiddenException(ForbiddenException e) {
+        return createErrorResponse(HttpStatus.FORBIDDEN, e.getMessage());
+    }
+
     // Обработка 409 CONFLICT (например, дублирующийся email)
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<Map<String, Object>> handleConflictException(IllegalStateException e) {

@@ -1,9 +1,7 @@
-package ru.practicum.shareit.booking;
+package ru.practicum.shareit.booking.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.service.BookingService;
@@ -12,12 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/bookings")
+@RequiredArgsConstructor
 public class BookingController {
-    private final BookingService bookingService;
 
-    public BookingController(BookingService bookingService) {
-        this.bookingService = bookingService;
-    }
+    private final BookingService bookingService;
 
     // Создание бронирования
     @PostMapping
@@ -43,7 +39,7 @@ public class BookingController {
         return bookingService.getBooking(userId, bookingId);
     }
 
-    // Получение всех бронирований пользователя
+    // Получение всех бронирований пользователя с фильтрацией по `state`
     @GetMapping
     public List<BookingDto> getUserBookings(
             @RequestHeader("X-Sharer-User-Id") Long userId,
@@ -51,7 +47,7 @@ public class BookingController {
         return bookingService.getUserBookings(userId, state);
     }
 
-    // Получение всех бронирований владельцем вещи
+    // Получение всех бронирований владельцем вещи с фильтрацией по `state`
     @GetMapping("/owner")
     public List<BookingDto> getOwnerBookings(
             @RequestHeader("X-Sharer-User-Id") Long ownerId,
