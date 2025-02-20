@@ -57,7 +57,6 @@ public class ItemServiceImpl implements ItemService {
                 .findTopByItem_IdAndStartAfterAndStatusOrderByStartAsc(itemId, LocalDateTime.now(), BookingStatus.APPROVED)
                 .orElse(null) : null;
 
-        // ✅ Используем исправленный метод для комментариев
         List<CommentDto> comments = commentRepository.findLatestByItemId(itemId).stream()
                 .map(CommentMapper::toCommentDto)
                 .collect(Collectors.toList());
