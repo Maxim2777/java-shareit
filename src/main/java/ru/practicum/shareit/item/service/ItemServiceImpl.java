@@ -13,6 +13,8 @@ import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.CommentRepository;
 import ru.practicum.shareit.item.repository.ItemRepository;
+import ru.practicum.shareit.request.model.ItemRequest;
+import ru.practicum.shareit.request.repository.ItemRequestRepository;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 
@@ -30,25 +32,32 @@ public class ItemServiceImpl implements ItemService {
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
     private final CommentRepository commentRepository;
+    private final ItemRequestRepository itemRequestRepository;
 
     @Override
-    public ItemDto addItem(Long ownerId, ItemDto itemDto) {
+    public ItemDto addItem(Long ownerId, ItemDto itemDto, Long requestId) { // ✅ Добавили requestId
         User owner = userRepository.findById(ownerId)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
 
-        Item item = ItemMapper.toItem(itemDto, owner);
+        ItemRequest itemRequest = null;
+        if (requestId != null) { // ✅ Теперь используем параметр requestId вместо itemDto.getRequestId()
+            itemRequest = itemRequestRepository.findById(requestId)
+                    .orElseThrow(() -> new NoSuchElementException("Request not found"));
+        }
+
+        Item item = ItemMapper.toItem(itemDto, owner, itemRequest); // ✅ Теперь передаём `ItemRequest`
+
         return ItemMapper.toItemDto(itemRepository.save(item));
     }
+
 
     @Override
     public ItemDto getItem(Long itemId, Long userId) {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NoSuchElementException("Item not found"));
 
-        // Проверяем, является ли пользователь владельцем вещи
         boolean isOwner = item.getOwner().getId().equals(userId);
 
-        // Если пользователь владелец, запрашиваем бронирования, иначе оставляем null
         Booking lastBooking = isOwner ? bookingRepository
                 .findTopByItem_IdAndStartBeforeAndStatusOrderByEndDesc(itemId, LocalDateTime.now(), BookingStatus.APPROVED)
                 .orElse(null) : null;
@@ -63,7 +72,6 @@ public class ItemServiceImpl implements ItemService {
 
         return ItemMapper.toItemDto(item, lastBooking, nextBooking, comments);
     }
-
 
     @Override
     public ItemDto updateItem(Long ownerId, Long itemId, ItemDto itemDto) {

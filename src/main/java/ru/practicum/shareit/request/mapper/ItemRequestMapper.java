@@ -1,27 +1,37 @@
 package ru.practicum.shareit.request.mapper;
 
-import ru.practicum.shareit.request.ItemRequest;
+import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
+import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 public class ItemRequestMapper {
-    public static ItemRequestDto toItemRequestDto(ItemRequest request) {
+
+    public static ItemRequestDto toItemRequestDto(ItemRequest request, List<ItemDto> items) {
         return ItemRequestDto.builder()
                 .id(request.getId())
                 .description(request.getDescription())
-                .requestorId(request.getRequestor().getId())
                 .created(request.getCreated())
+                .items(items)
                 .build();
     }
 
-    public static ItemRequest toItemRequest(ItemRequestDto itemRequestDto, User requestor, Long id) {
+    public static ItemRequestDto toItemRequestDtoWithItems(ItemRequest request, List<ItemDto> items) {
+        return ItemRequestDto.builder()
+                .id(request.getId())
+                .description(request.getDescription())
+                .created(request.getCreated())
+                .items(items)
+                .build();
+    }
+
+    public static ItemRequest toItemRequest(ItemRequestDto requestDto, User requestor) {
         return ItemRequest.builder()
-                .id(id)
-                .description(itemRequestDto.getDescription())
+                .description(requestDto.getDescription())
                 .requestor(requestor)
-                .created(LocalDateTime.now())
+                .created(requestDto.getCreated())
                 .build();
     }
 }

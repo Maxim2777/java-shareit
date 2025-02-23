@@ -2,6 +2,7 @@ package ru.practicum.shareit.item.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
 @Entity
@@ -32,4 +33,8 @@ public class Item {
 
     @Column(name = "request_id")
     private Long requestId; // ID запроса, если вещь создана по запросу
+
+    @ManyToOne
+    @JoinColumn(name = "request_id", nullable = true) // Может быть null, если вещь добавлена без запроса
+    private ItemRequest request;
 }

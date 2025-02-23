@@ -1,9 +1,10 @@
 package ru.practicum.shareit.request.dto;
 
 import lombok.*;
-
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
+import ru.practicum.shareit.item.dto.ItemDto;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ public class ItemRequestDto {
     @NotBlank(message = "Описание запроса не может быть пустым")
     private String description;
 
-    private Long requestorId;
     private LocalDateTime created;
-}
 
+    private List<ItemDto> items;
+}

@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,9 +25,15 @@ public class ItemDto {
     @NotNull(message = "Доступность вещи должна быть указана")
     private Boolean available;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL) // ✅ Скрываем `requestId`, если `null`
     private Long requestId;
 
-    private BookingShortDto lastBooking; // Последнее бронирование
-    private BookingShortDto nextBooking; // Следующее бронирование
-    private List<CommentDto> comments;   // Отзывы пользователей
+    @JsonInclude(JsonInclude.Include.NON_NULL) // ✅ Скрываем `lastBooking`, если `null`
+    private BookingShortDto lastBooking;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL) // ✅ Скрываем `nextBooking`, если `null`
+    private BookingShortDto nextBooking;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY) // ✅ Скрываем `comments`, если пустой
+    private List<CommentDto> comments;
 }
