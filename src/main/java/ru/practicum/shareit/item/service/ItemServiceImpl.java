@@ -128,4 +128,11 @@ public class ItemServiceImpl implements ItemService {
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ItemDto> getItemsByRequestId(Long requestId) {
+        return itemRepository.findByRequest_Id(requestId).stream() // ✅ Используем правильное имя метода
+                .map(ItemMapper::toItemDto)
+                .collect(Collectors.toList());
+    }
 }

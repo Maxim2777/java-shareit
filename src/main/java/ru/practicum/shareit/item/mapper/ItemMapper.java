@@ -29,14 +29,8 @@ public class ItemMapper {
                 .description(item.getDescription())
                 .available(item.getAvailable())
                 .requestId(item.getRequest() != null ? item.getRequest().getId() : null) // ✅ Безопасное извлечение requestId
-                .lastBooking(lastBooking != null ? BookingShortDto.builder()
-                        .id(lastBooking.getId())
-                        .bookerId(lastBooking.getBooker().getId())
-                        .build() : null)
-                .nextBooking(nextBooking != null ? BookingShortDto.builder()
-                        .id(nextBooking.getId())
-                        .bookerId(nextBooking.getBooker().getId())
-                        .build() : null)
+                .lastBooking(toBookingShortDto(lastBooking))
+                .nextBooking(toBookingShortDto(nextBooking))
                 .comments(comments)
                 .build();
     }
@@ -50,5 +44,14 @@ public class ItemMapper {
                 .owner(owner)
                 .request(request) // ✅ Правильное связывание с ItemRequest
                 .build();
+    }
+
+    private static BookingShortDto toBookingShortDto(Booking booking) {
+        return (booking != null)
+                ? BookingShortDto.builder()
+                .id(booking.getId())
+                .bookerId(booking.getBooker().getId())
+                .build()
+                : null;
     }
 }
