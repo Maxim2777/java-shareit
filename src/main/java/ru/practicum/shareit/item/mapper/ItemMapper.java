@@ -34,8 +34,18 @@ public class ItemMapper {
                 .description(item.getDescription())
                 .available(item.getAvailable())
                 .requestId(item.getRequest() != null ? item.getRequest().getId() : null)
-                .lastBooking(lastBooking != null ? toBookingShortDto(lastBooking) : null) // ✅ Исправили вызов
-                .nextBooking(nextBooking != null ? toBookingShortDto(nextBooking) : null) // ✅ Исправили вызов
+                .lastBooking(lastBooking != null
+                        ? BookingShortDto.builder()
+                        .id(lastBooking.getId())
+                        .bookerId(lastBooking.getBooker().getId())
+                        .build()
+                        : null)
+                .nextBooking(nextBooking != null
+                        ? BookingShortDto.builder()
+                        .id(nextBooking.getId())
+                        .bookerId(nextBooking.getBooker().getId())
+                        .build()
+                        : null)
                 .comments(comments)
                 .build();
     }
@@ -49,14 +59,5 @@ public class ItemMapper {
                 .owner(owner)
                 .request(request) // ✅ Используем `ItemRequest`, а не `requestId`
                 .build();
-    }
-
-    private static BookingShortDto toBookingShortDto(Booking booking) {
-        return (booking != null)
-                ? BookingShortDto.builder()
-                .id(booking.getId())
-                .bookerId(booking.getBooker().getId())
-                .build()
-                : null;
     }
 }

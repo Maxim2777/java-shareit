@@ -28,12 +28,9 @@ public class ItemDto {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long requestId;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private BookingShortDto lastBooking; // ✅ Проверяем, что поле существует
+    private BookingShortDto lastBooking;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private BookingShortDto nextBooking; // ✅ Проверяем, что поле существует
+    private BookingShortDto nextBooking;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<CommentDto> comments;
 }
