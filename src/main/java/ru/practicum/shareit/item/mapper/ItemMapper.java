@@ -13,13 +13,18 @@ import java.util.List;
 public class ItemMapper {
 
     public static ItemDto toItemDto(Item item) {
-        return ItemDto.builder()
+        ItemDto itemDto = ItemDto.builder()
                 .id(item.getId())
                 .name(item.getName())
                 .description(item.getDescription())
                 .available(item.getAvailable())
-                .requestId(item.getRequest() != null ? item.getRequest().getId() : null) // ✅ Корректное извлечение requestId
+                .requestId(item.getRequest() != null ? item.getRequest().getId() : null)
                 .build();
+
+        System.out.println("🛠️ [toItemDto] Преобразовали item в itemDto: " + itemDto +
+                ", requestId=" + itemDto.getRequestId());
+
+        return itemDto;
     }
 
     public static ItemDto toItemDto(Item item, Booking lastBooking, Booking nextBooking, List<CommentDto> comments) {
@@ -28,21 +33,21 @@ public class ItemMapper {
                 .name(item.getName())
                 .description(item.getDescription())
                 .available(item.getAvailable())
-                .requestId(item.getRequest() != null ? item.getRequest().getId() : null) // ✅ Безопасное извлечение requestId
-                .lastBooking(toBookingShortDto(lastBooking))
-                .nextBooking(toBookingShortDto(nextBooking))
+                .requestId(item.getRequest() != null ? item.getRequest().getId() : null)
+                .lastBooking(lastBooking != null ? toBookingShortDto(lastBooking) : null) // ✅ Исправили вызов
+                .nextBooking(nextBooking != null ? toBookingShortDto(nextBooking) : null) // ✅ Исправили вызов
                 .comments(comments)
                 .build();
     }
 
-    public static Item toItem(ItemDto itemDto, User owner, ItemRequest request) { // ✅ Используем ItemRequest, а не requestId
+    public static Item toItem(ItemDto itemDto, User owner, ItemRequest request) {
         return Item.builder()
                 .id(itemDto.getId())
                 .name(itemDto.getName())
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
                 .owner(owner)
-                .request(request) // ✅ Правильное связывание с ItemRequest
+                .request(request) // ✅ Используем `ItemRequest`, а не `requestId`
                 .build();
     }
 

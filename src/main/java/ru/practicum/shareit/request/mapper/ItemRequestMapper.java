@@ -10,20 +10,12 @@ import java.util.List;
 public class ItemRequestMapper {
 
     public static ItemRequestDto toItemRequestDto(ItemRequest request, List<ItemDto> items) {
+        System.out.println("Mapping request: " + request.getId() + " with " + items.size() + " items");
         return ItemRequestDto.builder()
                 .id(request.getId())
                 .description(request.getDescription())
                 .created(request.getCreated())
-                .items(items)
-                .build();
-    }
-
-    public static ItemRequestDto toItemRequestDtoWithItems(ItemRequest request, List<ItemDto> items) {
-        return ItemRequestDto.builder()
-                .id(request.getId())
-                .description(request.getDescription())
-                .created(request.getCreated())
-                .items(items)
+                .items(items != null ? items : List.of()) // ✅ Обеспечиваем, что список не null
                 .build();
     }
 
@@ -32,6 +24,15 @@ public class ItemRequestMapper {
                 .description(requestDto.getDescription())
                 .requestor(requestor)
                 .created(requestDto.getCreated())
+                .build();
+    }
+
+    public static ItemRequestDto toItemRequestDtoWithItems(ItemRequest request, List<ItemDto> items) {
+        return ItemRequestDto.builder()
+                .id(request.getId())
+                .description(request.getDescription())
+                .created(request.getCreated())
+                .items(items) // ✅ Теперь добавляем список вещей
                 .build();
     }
 }

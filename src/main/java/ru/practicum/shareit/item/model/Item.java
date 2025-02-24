@@ -32,6 +32,6 @@ public class Item {
     private User owner; // Связь с владельцем вещи
 
     @ManyToOne
-    @JoinColumn(name = "request_id", nullable = true)
-    private ItemRequest request; // ✅ Связываем с запросом (если есть)
+    @JoinColumn(name = "request_id", nullable = true) // Может быть null, если вещь добавлена без запроса
+    private ItemRequest request;
 }

@@ -24,9 +24,9 @@ public class ItemController {
      */
     @PostMapping
     public ItemDto addItem(@RequestHeader("X-Sharer-User-Id") Long ownerId,
-                           @Valid @RequestBody ItemDto itemDto,
-                           @RequestParam(value = "requestId", required = false) Long requestId) {
-        return itemService.addItem(ownerId, itemDto, requestId); // ✅ Теперь передаём 3 аргумента
+                           @Valid @RequestBody ItemDto itemDto) {
+        System.out.println("📩 [addItem] Получен requestId из itemDto: " + itemDto.getRequestId());
+        return itemService.addItem(ownerId, itemDto);
     }
 
     /**

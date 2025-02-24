@@ -35,21 +35,26 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRequestRepository itemRequestRepository;
 
     @Override
-    public ItemDto addItem(Long ownerId, ItemDto itemDto, Long requestId) { // ✅ Добавили requestId
+    public ItemDto addItem(Long ownerId, ItemDto itemDto) {
         User owner = userRepository.findById(ownerId)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
 
+        // 📌 Получаем requestId из itemDto
+        Long requestId = itemDto.getRequestId();
         ItemRequest itemRequest = null;
-        if (requestId != null) { // ✅ Теперь используем параметр requestId вместо itemDto.getRequestId()
+
+        if (requestId != null) {
             itemRequest = itemRequestRepository.findById(requestId)
                     .orElseThrow(() -> new NoSuchElementException("Request not found"));
         }
 
-        Item item = ItemMapper.toItem(itemDto, owner, itemRequest); // ✅ Теперь передаём `ItemRequest`
+        // ✅ Теперь `itemRequest` правильно связывается
+        Item item = ItemMapper.toItem(itemDto, owner, itemRequest);
+        item = itemRepository.save(item);
 
-        return ItemMapper.toItemDto(itemRepository.save(item));
+        System.out.println("✅ [addItem] item сохранен в БД: " + item);
+        return ItemMapper.toItemDto(item);
     }
-
 
     @Override
     public ItemDto getItem(Long itemId, Long userId) {
@@ -57,6 +62,11 @@ public class ItemServiceImpl implements ItemService {
                 .orElseThrow(() -> new NoSuchElementException("Item not found"));
 
         boolean isOwner = item.getOwner().getId().equals(userId);
+
+        // 🛠️ Логируем перед поиском бронирований
+        System.out.println("🔍 [getItem] Получен itemId: " + itemId + ", userId: " + userId);
+        System.out.println("👤 [getItem] Владелец вещи: " + item.getOwner().getId() + ", Запрашивающий: " + userId);
+        System.out.println("📌 [getItem] Пользователь является владельцем: " + isOwner);
 
         Booking lastBooking = isOwner ? bookingRepository
                 .findTopByItem_IdAndStartBeforeAndStatusOrderByEndDesc(itemId, LocalDateTime.now(), BookingStatus.APPROVED)
@@ -66,12 +76,22 @@ public class ItemServiceImpl implements ItemService {
                 .findTopByItem_IdAndStartAfterAndStatusOrderByStartAsc(itemId, LocalDateTime.now(), BookingStatus.APPROVED)
                 .orElse(null) : null;
 
+        // ✅ Логируем найденные бронирования
+        System.out.println("📅 [getItem] lastBooking: " + (lastBooking != null ? lastBooking.getId() : "null"));
+        System.out.println("⏭️ [getItem] nextBooking: " + (nextBooking != null ? nextBooking.getId() : "null"));
+
         List<CommentDto> comments = commentRepository.findLatestByItemId(itemId).stream()
                 .map(CommentMapper::toCommentDto)
                 .collect(Collectors.toList());
 
-        return ItemMapper.toItemDto(item, lastBooking, nextBooking, comments);
+        ItemDto itemDto = ItemMapper.toItemDto(item, lastBooking, nextBooking, comments);
+
+        // ✅ Логируем DTO перед возвратом
+        System.out.println("✅ [getItem] Возвращаемый itemDto: " + itemDto);
+
+        return itemDto;
     }
+
 
     @Override
     public ItemDto updateItem(Long ownerId, Long itemId, ItemDto itemDto) {
@@ -131,8 +151,18 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> getItemsByRequestId(Long requestId) {
-        return itemRepository.findByRequest_Id(requestId).stream() // ✅ Используем правильное имя метода
+        System.out.println("🔍 [getItemsByRequestId] Запрос вещей для requestId=" + requestId);
+
+        List<Item> items = itemRepository.findByRequest_Id(requestId);
+
+        System.out.println("📌 [getItemsByRequestId] Найдено вещей: " + items.size());
+
+        List<ItemDto> itemDtos = items.stream()
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());
+
+        System.out.println("🛠️ [getItemsByRequestId] Преобразовано в DTO: " + itemDtos);
+
+        return itemDtos;
     }
 }
