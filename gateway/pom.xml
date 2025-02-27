@@ -83,7 +83,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>ru.practicum.shareit.gateway.ShareItGatewayApp</mainClass>
+                    <mainClass>ru.practicum.shareit.ShareItGatewayApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>
