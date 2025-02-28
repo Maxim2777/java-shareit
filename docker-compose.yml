@@ -12,7 +12,7 @@ services:
         condition: service_healthy
     environment:
       - SHAREIT_SERVER_URL=http://server:9090
-    restart: always  # Гарантирует перезапуск при сбоях
+    restart: unless-stopped  # Гарантирует перезапуск при сбоях
 
   server:
     build: server
@@ -27,7 +27,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/shareit
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=shareit
-    restart: always  # Гарантирует перезапуск при сбоях
+    restart: unless-stopped  # Гарантирует перезапуск при сбоях
 
   db:
     image: postgres:16.1
@@ -45,7 +45,7 @@ services:
       retries: 10
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    restart: always  # Гарантирует, что БД не выключится
+    restart: unless-stopped  # Гарантирует, что БД не выключится
 
 volumes:
   postgres_data:
