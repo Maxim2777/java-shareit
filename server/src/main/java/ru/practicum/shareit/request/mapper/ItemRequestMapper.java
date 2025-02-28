@@ -15,7 +15,7 @@ public class ItemRequestMapper {
                 .id(request.getId())
                 .description(request.getDescription())
                 .created(request.getCreated())
-                .items(items != null ? items : List.of()) // ✅ Обеспечиваем, что список не null
+                .items(items) // ✅ Обеспечиваем, что список не null
                 .build();
     }
 
