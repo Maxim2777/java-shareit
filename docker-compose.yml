@@ -12,6 +12,7 @@ services:
         condition: service_healthy
     environment:
       - SHAREIT_SERVER_URL=http://server:9090
+    entrypoint: [ "sh", "-c", "sleep 10 && java -jar /app.jar" ]  # Ожидание перед запуском
     restart: unless-stopped  # Гарантирует перезапуск при сбоях
 
   server:
@@ -27,7 +28,8 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/shareit
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=shareit
-    restart: unless-stopped  # Гарантирует перезапуск при сбоях
+    entrypoint: [ "sh", "-c", "sleep 10 && java -jar /app.jar" ]  # Ожидание перед запуском
+    restart: unless-stopped
 
   db:
     image: postgres:16.1
