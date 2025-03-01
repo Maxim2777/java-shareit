@@ -11,9 +11,7 @@ import ru.practicum.shareit.server.item.dto.ItemDto;
 import ru.practicum.shareit.server.request.dto.ItemRequestDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.practicum.shareit.server.booking.status.BookingStatus.APPROVED;
 
 @JsonTest
 class DtoJsonTest {
