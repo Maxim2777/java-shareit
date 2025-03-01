@@ -10,7 +10,7 @@ import ru.practicum.shareit.gateway.request.dto.ItemRequestDto;
 @RequiredArgsConstructor
 public class ItemRequestClient {
     private final RestTemplate restTemplate;
-    private final String serverUrl = "http://localhost:9090/requests"; // URL `shareIt-server`
+    private final String serverUrl = "http://shareit-server:9090/requests"; // URL `shareIt-server`
 
     // ✅ Создать запрос вещи (с заголовком X-Sharer-User-Id)
     public ResponseEntity<Object> createRequest(Long userId, ItemRequestDto itemRequestDto) {
