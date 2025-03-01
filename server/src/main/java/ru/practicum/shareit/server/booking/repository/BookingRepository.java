@@ -34,7 +34,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByItem_Owner_IdAndStartAfterOrderByStartDesc(Long ownerId, LocalDateTime now);
 
-    // ✅ Исправлено: Добавлены аннотации @Param
     @Query("SELECT COUNT(b) > 0 FROM Booking b " +
             "WHERE b.booker.id = :bookerId " +
             "AND b.item.id = :itemId " +

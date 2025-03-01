@@ -15,7 +15,7 @@ public class ItemRequestMapper {
                 .id(request.getId())
                 .description(request.getDescription())
                 .created(request.getCreated())
-                .items(items) // ✅ Обеспечиваем, что список не null
+                .items(items)
                 .build();
     }
 
@@ -32,7 +32,7 @@ public class ItemRequestMapper {
                 .id(request.getId())
                 .description(request.getDescription())
                 .created(request.getCreated())
-                .items(items) // ✅ Теперь добавляем список вещей
+                .items(items) // Добавляем список вещей
                 .build();
     }
 }

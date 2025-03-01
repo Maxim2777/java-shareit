@@ -12,7 +12,7 @@ public class BookingClient {
     private final RestTemplate restTemplate;
     private final String serverUrl = "http://shareit-server:9090/bookings"; // URL `shareIt-server`
 
-    // ✅ Создать бронирование (userId передается в заголовке)
+    // Создать бронирование (userId передается в заголовке)
     public ResponseEntity<Object> createBooking(Long userId, BookingDto bookingDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", userId.toString());
@@ -22,7 +22,7 @@ public class BookingClient {
         return restTemplate.exchange(serverUrl, HttpMethod.POST, requestEntity, Object.class);
     }
 
-    // ✅ Подтвердить/отклонить бронирование (ownerId передается в заголовке)
+    // Подтвердить/отклонить бронирование (ownerId передается в заголовке)
     public ResponseEntity<Object> approveBooking(Long ownerId, Long bookingId, boolean approved) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", ownerId.toString());
@@ -36,7 +36,7 @@ public class BookingClient {
         );
     }
 
-    // ✅ Получить бронирование по ID (userId передается в заголовке)
+    // Получить бронирование по ID (userId передается в заголовке)
     public ResponseEntity<Object> getBooking(Long userId, Long bookingId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", userId.toString());
@@ -50,7 +50,7 @@ public class BookingClient {
         );
     }
 
-    // ✅ Получить бронирования пользователя (userId передается в заголовке)
+    // Получить бронирования пользователя (userId передается в заголовке)
     public ResponseEntity<Object> getUserBookings(Long userId, String state) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", userId.toString());
@@ -64,7 +64,7 @@ public class BookingClient {
         );
     }
 
-    // ✅ Получить бронирования владельца (ownerId передается в заголовке)
+    // Получить бронирования владельца (ownerId передается в заголовке)
     public ResponseEntity<Object> getOwnerBookings(Long ownerId, String state) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", ownerId.toString());

@@ -31,7 +31,7 @@ public class UserClient {
 
         return restTemplate.exchange(
                 serverUrl + "/" + userId,
-                HttpMethod.PATCH,  // ✅ ИСПОЛЬЗУЕМ PATCH вместо PUT
+                HttpMethod.PATCH,  // Используем PATCH, а не PUT
                 requestEntity,
                 Object.class
         );

@@ -12,7 +12,6 @@ public interface ItemRequestRepository extends JpaRepository<ItemRequest, Long> 
     // Найти все запросы, созданные конкретным пользователем (от новых к старым)
     List<ItemRequest> findByRequestor_IdOrderByCreatedDesc(Long userId);
 
-    // ✅ Исправлено: Добавлены @Param
     @Query("SELECT r FROM ItemRequest r WHERE r.requestor.id <> :userId ORDER BY r.created DESC")
     List<ItemRequest> findAllExceptOwn(@Param("userId") Long userId);
 }

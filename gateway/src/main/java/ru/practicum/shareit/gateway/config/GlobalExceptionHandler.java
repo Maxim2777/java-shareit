@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         HttpStatus status = HttpStatus.valueOf(statusCode.value()); // Преобразуем HttpStatusCode в HttpStatus
 
         Map<String, Object> response = new HashMap<>();
-        response.put("error", status.getReasonPhrase());  // Теперь корректно получаем текстовое описание ошибки
+        response.put("error", status.getReasonPhrase());
         response.put("message", message);
         response.put("status", status.value());
 

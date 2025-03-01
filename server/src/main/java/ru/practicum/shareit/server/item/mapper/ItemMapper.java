@@ -57,7 +57,7 @@ public class ItemMapper {
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
                 .owner(owner)
-                .request(request) // ✅ Используем `ItemRequest`, а не `requestId`
+                .request(request) // Используем `ItemRequest`
                 .build();
     }
 }

@@ -13,7 +13,7 @@ public class ItemClient {
     private final RestTemplate restTemplate;
     private final String serverUrl = "http://shareit-server:9090/items"; // URL `shareIt-server`
 
-    // ✅ Добавить вещь (с заголовком X-Sharer-User-Id)
+    // Добавить вещь (с заголовком X-Sharer-User-Id)
     public ResponseEntity<Object> addItem(Long ownerId, ItemDto itemDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", ownerId.toString());
@@ -23,7 +23,7 @@ public class ItemClient {
         return restTemplate.exchange(serverUrl, HttpMethod.POST, requestEntity, Object.class);
     }
 
-    // ✅ Обновить вещь (PATCH)
+    // Обновить вещь (PATCH)
     public ResponseEntity<Object> updateItem(Long ownerId, Long id, ItemDto itemDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", ownerId.toString());
@@ -33,7 +33,7 @@ public class ItemClient {
         return restTemplate.exchange(serverUrl + "/" + id, HttpMethod.PATCH, requestEntity, Object.class);
     }
 
-    // ✅ Получить вещь по ID
+    // Получить вещь по ID
     public ResponseEntity<Object> getItem(Long id, Long userId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", userId.toString());
@@ -42,7 +42,7 @@ public class ItemClient {
         return restTemplate.exchange(serverUrl + "/" + id, HttpMethod.GET, requestEntity, Object.class);
     }
 
-    // ✅ Получить список вещей пользователя
+    // Получить список вещей пользователя
     public ResponseEntity<Object> getUserItems(Long ownerId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", ownerId.toString());
@@ -51,12 +51,12 @@ public class ItemClient {
         return restTemplate.exchange(serverUrl, HttpMethod.GET, requestEntity, Object.class);
     }
 
-    // ✅ Поиск вещей (без заголовка)
+    // Поиск вещей (без заголовка)
     public ResponseEntity<Object> searchItems(String text) {
         return restTemplate.getForEntity(serverUrl + "/search?text=" + text, Object.class);
     }
 
-    // ✅ Добавить комментарий
+    // Добавить комментарий
     public ResponseEntity<Object> addComment(Long userId, Long itemId, CommentDto commentDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", userId.toString());

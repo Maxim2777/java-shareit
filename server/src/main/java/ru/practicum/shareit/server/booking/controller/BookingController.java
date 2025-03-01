@@ -16,18 +16,14 @@ public class BookingController {
 
     private final BookingService bookingService;
 
-    /**
-     * Создание бронирования
-     */
+    // Создание бронирования
     @PostMapping
     public ResponseEntity<BookingDto> createBooking(@RequestHeader("X-Sharer-User-Id") Long userId,
                                                     @Valid @RequestBody BookingDto bookingDto) {
         return ResponseEntity.ok(bookingService.createBooking(userId, bookingDto));
     }
 
-    /**
-     * Подтверждение или отклонение бронирования владельцем
-     */
+    // Подтверждение или отклонение бронирования владельцем
     @PatchMapping("/{bookingId}")
     public ResponseEntity<BookingDto> approveBooking(
             @RequestHeader("X-Sharer-User-Id") Long ownerId,
@@ -36,9 +32,7 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.approveBooking(ownerId, bookingId, approved));
     }
 
-    /**
-     * Получение информации о бронировании
-     */
+    // Получение информации о бронировании
     @GetMapping("/{bookingId}")
     public ResponseEntity<BookingDto> getBooking(
             @RequestHeader("X-Sharer-User-Id") Long userId,
@@ -46,9 +40,7 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBooking(userId, bookingId));
     }
 
-    /**
-     * Получение всех бронирований пользователя с фильтрацией по `state`
-     */
+    // Получение всех бронирований пользователя с фильтрацией по `state`
     @GetMapping
     public ResponseEntity<List<BookingDto>> getUserBookings(
             @RequestHeader("X-Sharer-User-Id") Long userId,
@@ -56,9 +48,7 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getUserBookings(userId, state));
     }
 
-    /**
-     * Получение всех бронирований владельцем вещи с фильтрацией по `state`
-     */
+    // Получение всех бронирований владельцем вещи с фильтрацией по `state`
     @GetMapping("/owner")
     public ResponseEntity<List<BookingDto>> getOwnerBookings(
             @RequestHeader("X-Sharer-User-Id") Long ownerId,

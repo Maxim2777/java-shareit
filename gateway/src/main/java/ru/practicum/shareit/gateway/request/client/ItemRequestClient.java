@@ -12,7 +12,7 @@ public class ItemRequestClient {
     private final RestTemplate restTemplate;
     private final String serverUrl = "http://shareit-server:9090/requests"; // URL `shareIt-server`
 
-    // ✅ Создать запрос вещи (с заголовком X-Sharer-User-Id)
+    // Создать запрос вещи (с заголовком X-Sharer-User-Id)
     public ResponseEntity<Object> createRequest(Long userId, ItemRequestDto itemRequestDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", userId.toString());
@@ -22,7 +22,7 @@ public class ItemRequestClient {
         return restTemplate.exchange(serverUrl, HttpMethod.POST, requestEntity, Object.class);
     }
 
-    // ✅ Получить запросы конкретного пользователя (с заголовком)
+    // Получить запросы конкретного пользователя (с заголовком)
     public ResponseEntity<Object> getUserRequests(Long userId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", userId.toString());
@@ -31,7 +31,7 @@ public class ItemRequestClient {
         return restTemplate.exchange(serverUrl, HttpMethod.GET, requestEntity, Object.class);
     }
 
-    // ✅ Получить все запросы (с заголовком)
+    // Получить все запросы (с заголовком)
     public ResponseEntity<Object> getAllRequests(Long userId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", userId.toString());
@@ -40,7 +40,7 @@ public class ItemRequestClient {
         return restTemplate.exchange(serverUrl + "/all", HttpMethod.GET, requestEntity, Object.class);
     }
 
-    // ✅ Получить конкретный запрос по ID (с заголовком)
+    // Получить конкретный запрос по ID (с заголовком)
     public ResponseEntity<Object> getRequestById(Long userId, Long requestId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", userId.toString());
