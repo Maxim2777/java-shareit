@@ -33,7 +33,6 @@ class UserServiceTest {
         );
     }
 
-    // 1. Тестирование создания пользователя
     @Test
     void createUserValidDataShouldSucceed() {
         UserDto userDto = new UserDto();
@@ -67,7 +66,6 @@ class UserServiceTest {
         });
     }
 
-    // 2. Тестирование получения пользователя по ID
     @Test
     void getUserByIdValidIdShouldReturnUser() {
         Optional<User> foundUser = userRepository.findById(user.getId());
@@ -82,7 +80,6 @@ class UserServiceTest {
         assertFalse(foundUser.isPresent());
     }
 
-    // 3. Тестирование получения списка всех пользователей
     @Test
     void getAllUsersShouldReturnUserList() {
         List<User> users = userRepository.findAll();
@@ -100,7 +97,6 @@ class UserServiceTest {
         assertTrue(users.isEmpty());
     }
 
-    // 4. Тестирование удаления пользователя
     @Test
     void deleteUserByIdShouldRemoveUser() {
         userRepository.deleteById(user.getId());

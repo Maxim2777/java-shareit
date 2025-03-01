@@ -74,7 +74,6 @@ class BookingServiceTest {
         );
     }
 
-    // 1. Тестирование создания бронирования
     @Test
     void createBookingValidDataShouldSucceed() {
         BookingDto bookingDto = new BookingDto();
@@ -96,7 +95,6 @@ class BookingServiceTest {
         assertEquals(BookingStatus.WAITING, newBooking.getStatus());
     }
 
-    // 2. Тестирование получения бронирования по ID
     @Test
     void getBookingByIdValidIdShouldReturnBooking() {
         Optional<Booking> foundBooking = bookingRepository.findById(booking.getId());
@@ -111,7 +109,6 @@ class BookingServiceTest {
         assertFalse(foundBooking.isPresent());
     }
 
-    // 3. Тестирование получения бронирований пользователя
     @Test
     void getUserBookingsShouldReturnBookings() {
         List<Booking> bookings = bookingRepository.findByBookerIdOrderByStartDesc(booker.getId());
@@ -127,7 +124,6 @@ class BookingServiceTest {
         assertTrue(bookings.isEmpty());
     }
 
-    // 4. Тестирование получения бронирований владельца
     @Test
     void getOwnerBookingsShouldReturnBookings() {
         List<Booking> bookings = bookingRepository.findByItem_Owner_IdOrderByStartDesc(owner.getId());
@@ -142,7 +138,6 @@ class BookingServiceTest {
         assertTrue(bookings.isEmpty());
     }
 
-    // 5. Тестирование обновления статуса бронирования
     @Test
     void updateBookingStatusShouldSucceed() {
         booking.setStatus(BookingStatus.APPROVED);
@@ -151,7 +146,6 @@ class BookingServiceTest {
         assertEquals(BookingStatus.APPROVED, updatedBooking.getStatus());
     }
 
-    // 6. Тестирование удаления бронирования
     @Test
     void deleteBookingByIdShouldRemoveBooking() {
         bookingRepository.deleteById(booking.getId());

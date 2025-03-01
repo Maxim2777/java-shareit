@@ -56,7 +56,6 @@ class ItemServiceTest {
         );
     }
 
-    // 1. Тестирование добавления вещи
     @Test
     void addItemValidDataShouldSucceed() {
         ItemDto itemDto = new ItemDto();
@@ -77,7 +76,6 @@ class ItemServiceTest {
         assertEquals("New Item", newItem.getName());
     }
 
-    // 2. Тестирование получения вещи по ID
     @Test
     void getItemByIdValidIdShouldReturnItem() {
         Optional<Item> foundItem = itemRepository.findById(item.getId());
@@ -92,7 +90,6 @@ class ItemServiceTest {
         assertFalse(foundItem.isPresent());
     }
 
-    // 3. Тестирование обновления вещи
     @Test
     void updateItemValidDataShouldSucceed() {
         item.setName("Updated Item");
@@ -103,7 +100,6 @@ class ItemServiceTest {
         assertEquals("Updated Description", updatedItem.getDescription());
     }
 
-    // 4. Тестирование получения вещей пользователя
     @Test
     void getUserItemsValidUserShouldReturnItems() {
         List<Item> items = itemRepository.findByOwnerId(user.getId());
@@ -119,7 +115,6 @@ class ItemServiceTest {
         assertTrue(items.isEmpty());
     }
 
-    // 5. Тестирование поиска вещей по тексту
     @Test
     void searchItemByNameShouldReturnMatchingItem() {
         List<Item> foundItems = itemRepository.search("Test");
@@ -145,7 +140,6 @@ class ItemServiceTest {
         assertTrue(foundItems.isEmpty());
     }
 
-    // 6. Тестирование изменения доступности вещи
     @Test
     void updateItemAvailabilityShouldSucceed() {
         item.setAvailable(false);
@@ -154,7 +148,6 @@ class ItemServiceTest {
         assertFalse(updatedItem.getAvailable());
     }
 
-    // 7. Тестирование удаления вещи
     @Test
     void deleteItemByIdShouldRemoveItem() {
         itemRepository.deleteById(item.getId());

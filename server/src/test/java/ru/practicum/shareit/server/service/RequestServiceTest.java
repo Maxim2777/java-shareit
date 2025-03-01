@@ -56,7 +56,6 @@ class RequestServiceTest {
         );
     }
 
-    // 1. Тестирование создания запроса
     @Test
     void createRequestValidDataShouldSucceed() {
         ItemRequestDto requestDto = new ItemRequestDto();
@@ -74,7 +73,6 @@ class RequestServiceTest {
         assertEquals("Need a phone", newRequest.getDescription());
     }
 
-    // 2. Тестирование получения запроса по ID
     @Test
     void getRequestByIdValidIdShouldReturnRequest() {
         Optional<ItemRequest> foundRequest = itemRequestRepository.findById(itemRequest.getId());
@@ -89,7 +87,6 @@ class RequestServiceTest {
         assertFalse(foundRequest.isPresent());
     }
 
-    // 3. Тестирование получения запросов пользователя
     @Test
     void getUserRequestsShouldReturnRequests() {
         List<ItemRequest> requests = itemRequestRepository.findByRequestor_IdOrderByCreatedDesc(requestor.getId());
@@ -105,7 +102,6 @@ class RequestServiceTest {
         assertTrue(requests.isEmpty());
     }
 
-    // 4. Тестирование получения всех запросов (кроме своих)
     @Test
     void getAllRequestsShouldReturnRequestsExceptOwn() {
         List<ItemRequest> requests = itemRequestRepository.findAllExceptOwn(anotherUser.getId());
@@ -122,7 +118,6 @@ class RequestServiceTest {
         assertTrue(requests.isEmpty());
     }
 
-    // 5. Тестирование удаления запроса
     @Test
     void deleteRequestByIdShouldRemoveRequest() {
         itemRequestRepository.deleteById(itemRequest.getId());
