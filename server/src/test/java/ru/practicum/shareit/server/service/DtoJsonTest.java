@@ -39,15 +39,13 @@ class DtoJsonTest {
 
     @Test
     void testItemDtoDeserialization() throws Exception {
-        String json = """
-            {
-                "id": 1,
-                "name": "Hammer",
-                "description": "Heavy hammer",
-                "available": true,
-                "requestId": 2
-            }
-            """;
+        String json = "{"
+                + "\"id\": 1,"
+                + "\"name\": \"Hammer\","
+                + "\"description\": \"Heavy hammer\","
+                + "\"available\": true,"
+                + "\"requestId\": 2"
+                + "}";
 
         ItemDto itemDto = objectMapper.readValue(json, ItemDto.class);
 
@@ -78,15 +76,13 @@ class DtoJsonTest {
 
     @Test
     void testBookingDtoDeserialization() throws Exception {
-        String json = """
-            {
-                "id": 5,
-                "itemId": 10,
-                "status": "APPROVED",
-                "start": "2025-03-10T12:00:00",
-                "end": "2025-03-15T12:00:00"
-            }
-            """;
+        String json = "{"
+                + "\"id\": 5,"
+                + "\"itemId\": 10,"
+                + "\"status\": \"APPROVED\","
+                + "\"start\": \"2025-03-10T12:00:00\","
+                + "\"end\": \"2025-03-15T12:00:00\""
+                + "}";
 
         BookingDto bookingDto = objectMapper.readValue(json, BookingDto.class);
 
@@ -113,13 +109,11 @@ class DtoJsonTest {
 
     @Test
     void testItemRequestDtoDeserialization() throws Exception {
-        String json = """
-            {
-                "id": 7,
-                "description": "Need a laptop",
-                "created": "2025-03-01T10:00:00"
-            }
-            """;
+        String json = "{"
+                + "\"id\": 7,"
+                + "\"description\": \"Need a laptop\","
+                + "\"created\": \"2025-03-01T10:00:00\""
+                + "}";
 
         ItemRequestDto requestDto = objectMapper.readValue(json, ItemRequestDto.class);
 
@@ -146,14 +140,12 @@ class DtoJsonTest {
 
     @Test
     void testCommentDtoDeserialization() throws Exception {
-        String json = """
-            {
-                "id": 3,
-                "text": "Great item!",
-                "authorName": "John Doe",
-                "created": "2025-03-05T14:30:00"
-            }
-            """;
+        String json = "{"
+                + "\"id\": 3,"
+                + "\"text\": \"Great item!\","
+                + "\"authorName\": \"John Doe\","
+                + "\"created\": \"2025-03-05T14:30:00\""
+                + "}";
 
         CommentDto commentDto = objectMapper.readValue(json, CommentDto.class);
 
