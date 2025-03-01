@@ -47,7 +47,7 @@ class DtoJsonTest {
                 "available": true,
                 "requestId": 2
             }
-        """;
+            """;
 
         ItemDto itemDto = objectMapper.readValue(json, ItemDto.class);
 
@@ -79,14 +79,14 @@ class DtoJsonTest {
     @Test
     void testBookingDtoDeserialization() throws Exception {
         String json = """
-        {
-            "id": 5,
-            "itemId": 10,
-            "status": "APPROVED",
-            "start": "2025-03-10T12:00:00",
-            "end": "2025-03-15T12:00:00"
-        }
-    """;
+            {
+                "id": 5,
+                "itemId": 10,
+                "status": "APPROVED",
+                "start": "2025-03-10T12:00:00",
+                "end": "2025-03-15T12:00:00"
+            }
+            """;
 
         BookingDto bookingDto = objectMapper.readValue(json, BookingDto.class);
 
@@ -119,7 +119,7 @@ class DtoJsonTest {
                 "description": "Need a laptop",
                 "created": "2025-03-01T10:00:00"
             }
-        """;
+            """;
 
         ItemRequestDto requestDto = objectMapper.readValue(json, ItemRequestDto.class);
 
@@ -153,7 +153,7 @@ class DtoJsonTest {
                 "authorName": "John Doe",
                 "created": "2025-03-05T14:30:00"
             }
-        """;
+            """;
 
         CommentDto commentDto = objectMapper.readValue(json, CommentDto.class);
 
@@ -163,4 +163,3 @@ class DtoJsonTest {
         assertThat(commentDto.getCreated()).isEqualTo(LocalDateTime.of(2025, 3, 5, 14, 30));
     }
 }
-
