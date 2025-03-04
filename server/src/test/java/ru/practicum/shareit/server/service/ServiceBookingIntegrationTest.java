@@ -160,4 +160,168 @@ class ServiceBookingIntegrationTest {
         // Проверка
         assertThat(bookings).hasSize(2);
     }
+
+    @Test
+    void getUserBookings_shouldReturnPastBookings() {
+        // Создаем бронирование в прошлом
+        bookingDto.setStart(LocalDateTime.now().minusDays(5));
+        bookingDto.setEnd(LocalDateTime.now().minusDays(3));
+        BookingDto pastBooking = bookingService.createBooking(booker.getId(), bookingDto);
+
+        // Одобряем бронирование
+        bookingService.approveBooking(owner.getId(), pastBooking.getId(), true);
+
+        // Запрос PAST бронирований
+        List<BookingDto> pastBookings = bookingService.getUserBookings(booker.getId(), "PAST");
+
+        // Проверка
+        assertThat(pastBookings).hasSize(1);
+        assertThat(pastBookings.get(0).getId()).isEqualTo(pastBooking.getId());
+    }
+
+    @Test
+    void getUserBookings_shouldReturnFutureBookings() {
+        // Создаем бронирование в будущем
+        bookingDto.setStart(LocalDateTime.now().plusDays(5));
+        bookingDto.setEnd(LocalDateTime.now().plusDays(10));
+        BookingDto futureBooking = bookingService.createBooking(booker.getId(), bookingDto);
+
+        // Запрос FUTURE бронирований
+        List<BookingDto> futureBookings = bookingService.getUserBookings(booker.getId(), "FUTURE");
+
+        // Проверка
+        assertThat(futureBookings).hasSize(1);
+        assertThat(futureBookings.get(0).getId()).isEqualTo(futureBooking.getId());
+    }
+
+    @Test
+    void getUserBookings_shouldReturnCurrentBookings() {
+        // Создаем текущее бронирование
+        bookingDto.setStart(LocalDateTime.now().minusDays(1));
+        bookingDto.setEnd(LocalDateTime.now().plusDays(1));
+        BookingDto currentBooking = bookingService.createBooking(booker.getId(), bookingDto);
+
+        // Подтверждаем бронирование
+        bookingService.approveBooking(owner.getId(), currentBooking.getId(), true);
+
+        // Запрос CURRENT бронирований
+        List<BookingDto> currentBookings = bookingService.getUserBookings(booker.getId(), "CURRENT");
+
+        // Проверка
+        assertThat(currentBookings).hasSize(1);
+        assertThat(currentBookings.get(0).getId()).isEqualTo(currentBooking.getId());
+    }
+
+    @Test
+    void getUserBookings_shouldReturnWaitingBookings() {
+        // Создаем бронирование со статусом WAITING (неподтвержденное)
+        BookingDto waitingBooking = bookingService.createBooking(booker.getId(), bookingDto);
+
+        // Запрос WAITING бронирований
+        List<BookingDto> waitingBookings = bookingService.getUserBookings(booker.getId(), "WAITING");
+
+        // Проверка
+        assertThat(waitingBookings).hasSize(1);
+        assertThat(waitingBookings.get(0).getId()).isEqualTo(waitingBooking.getId());
+        assertThat(waitingBookings.get(0).getStatus()).isEqualTo(BookingStatus.WAITING);
+    }
+
+    @Test
+    void getUserBookings_shouldReturnRejectedBookings() {
+        // Создаем бронирование
+        BookingDto booking = bookingService.createBooking(booker.getId(), bookingDto);
+
+        // Отклоняем бронирование
+        bookingService.approveBooking(owner.getId(), booking.getId(), false);
+
+        // Запрос REJECTED бронирований
+        List<BookingDto> rejectedBookings = bookingService.getUserBookings(booker.getId(), "REJECTED");
+
+        // Проверка
+        assertThat(rejectedBookings).hasSize(1);
+        assertThat(rejectedBookings.get(0).getId()).isEqualTo(booking.getId());
+        assertThat(rejectedBookings.get(0).getStatus()).isEqualTo(BookingStatus.REJECTED);
+    }
+
+    @Test
+    void getOwnerBookings_shouldReturnPastBookings() {
+        // Создаем бронирование в прошлом
+        bookingDto.setStart(LocalDateTime.now().minusDays(5));
+        bookingDto.setEnd(LocalDateTime.now().minusDays(3));
+        BookingDto pastBooking = bookingService.createBooking(booker.getId(), bookingDto);
+
+        // Подтверждаем бронирование
+        bookingService.approveBooking(owner.getId(), pastBooking.getId(), true);
+
+        // Запрос PAST бронирований владельцем
+        List<BookingDto> pastBookings = bookingService.getOwnerBookings(owner.getId(), "PAST");
+
+        // Проверка
+        assertThat(pastBookings).hasSize(1);
+        assertThat(pastBookings.get(0).getId()).isEqualTo(pastBooking.getId());
+    }
+
+    @Test
+    void getOwnerBookings_shouldReturnFutureBookings() {
+        // Создаем бронирование в будущем
+        bookingDto.setStart(LocalDateTime.now().plusDays(5));
+        bookingDto.setEnd(LocalDateTime.now().plusDays(10));
+        BookingDto futureBooking = bookingService.createBooking(booker.getId(), bookingDto);
+
+        // Запрос FUTURE бронирований владельцем
+        List<BookingDto> futureBookings = bookingService.getOwnerBookings(owner.getId(), "FUTURE");
+
+        // Проверка
+        assertThat(futureBookings).hasSize(1);
+        assertThat(futureBookings.get(0).getId()).isEqualTo(futureBooking.getId());
+    }
+
+    @Test
+    void getOwnerBookings_shouldReturnCurrentBookings() {
+        // Создаем текущее бронирование
+        bookingDto.setStart(LocalDateTime.now().minusDays(1));
+        bookingDto.setEnd(LocalDateTime.now().plusDays(1));
+        BookingDto currentBooking = bookingService.createBooking(booker.getId(), bookingDto);
+
+        // Подтверждаем бронирование
+        bookingService.approveBooking(owner.getId(), currentBooking.getId(), true);
+
+        // Запрос CURRENT бронирований владельцем
+        List<BookingDto> currentBookings = bookingService.getOwnerBookings(owner.getId(), "CURRENT");
+
+        // Проверка
+        assertThat(currentBookings).hasSize(1);
+        assertThat(currentBookings.get(0).getId()).isEqualTo(currentBooking.getId());
+    }
+
+    @Test
+    void getOwnerBookings_shouldReturnWaitingBookings() {
+        // Создаем бронирование со статусом WAITING (неподтвержденное)
+        BookingDto waitingBooking = bookingService.createBooking(booker.getId(), bookingDto);
+
+        // Запрос WAITING бронирований владельцем
+        List<BookingDto> waitingBookings = bookingService.getOwnerBookings(owner.getId(), "WAITING");
+
+        // Проверка
+        assertThat(waitingBookings).hasSize(1);
+        assertThat(waitingBookings.get(0).getId()).isEqualTo(waitingBooking.getId());
+        assertThat(waitingBookings.get(0).getStatus()).isEqualTo(BookingStatus.WAITING);
+    }
+
+    @Test
+    void getOwnerBookings_shouldReturnRejectedBookings() {
+        // Создаем бронирование
+        BookingDto booking = bookingService.createBooking(booker.getId(), bookingDto);
+
+        // Отклоняем бронирование
+        bookingService.approveBooking(owner.getId(), booking.getId(), false);
+
+        // Запрос REJECTED бронирований владельцем
+        List<BookingDto> rejectedBookings = bookingService.getOwnerBookings(owner.getId(), "REJECTED");
+
+        // Проверка
+        assertThat(rejectedBookings).hasSize(1);
+        assertThat(rejectedBookings.get(0).getId()).isEqualTo(booking.getId());
+        assertThat(rejectedBookings.get(0).getStatus()).isEqualTo(BookingStatus.REJECTED);
+    }
 }
