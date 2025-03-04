@@ -8,7 +8,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.server.booking.dto.BookingDto;
 import ru.practicum.shareit.server.booking.service.BookingService;
-import ru.practicum.shareit.server.booking.status.BookingStatus;
 import ru.practicum.shareit.server.item.dto.CommentDto;
 import ru.practicum.shareit.server.item.dto.ItemDto;
 import ru.practicum.shareit.server.item.service.CommentService;
@@ -17,7 +16,6 @@ import ru.practicum.shareit.server.user.dto.UserDto;
 import ru.practicum.shareit.server.user.service.UserService;
 
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
