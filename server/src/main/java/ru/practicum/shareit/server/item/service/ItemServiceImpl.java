@@ -48,6 +48,7 @@ public class ItemServiceImpl implements ItemService {
         return ItemMapper.toItemDto(item);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public ItemDto getItem(Long itemId, Long userId) {
         Item item = itemRepository.findById(itemId)
@@ -86,6 +87,7 @@ public class ItemServiceImpl implements ItemService {
         return ItemMapper.toItemDto(itemRepository.save(existingItem));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<ItemDto> getUserItems(Long ownerId) {
         userRepository.findById(ownerId)
@@ -109,6 +111,7 @@ public class ItemServiceImpl implements ItemService {
                 }).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<ItemDto> searchItems(String text) {
         return text.isBlank() ? List.of() :
@@ -117,6 +120,7 @@ public class ItemServiceImpl implements ItemService {
                         .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<ItemDto> getItemsByRequestId(Long requestId) {
         return itemRepository.findByRequest_Id(requestId).stream()
