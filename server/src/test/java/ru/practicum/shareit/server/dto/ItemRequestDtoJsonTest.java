@@ -1,7 +1,6 @@
 package ru.practicum.shareit.server.dto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
@@ -13,7 +12,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.practicum.shareit.server.request.dto.ItemRequestDto;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
