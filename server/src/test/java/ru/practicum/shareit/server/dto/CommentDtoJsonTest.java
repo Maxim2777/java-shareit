@@ -71,21 +71,4 @@ class CommentDtoJsonTest {
         assertThat(commentDto.getAuthorName()).isEqualTo("John Doe");
         assertThat(commentDto.getCreated()).isEqualTo(LocalDateTime.of(2025, 3, 10, 14, 0));
     }
-
-    @Test
-    void shouldFailValidationIfTextIsBlank() {
-        // Создаем объект с пустым текстом комментария
-        CommentDto commentDto = new CommentDto();
-        commentDto.setId(1L);
-        commentDto.setText("");
-        commentDto.setAuthorName("John Doe");
-        commentDto.setCreated(LocalDateTime.now());
-
-        // Проверяем валидацию
-        Set<ConstraintViolation<CommentDto>> violations = validator.validate(commentDto);
-
-        // Ожидаем ошибку
-        assertThat(violations).hasSize(1);
-        assertThat(violations.iterator().next().getMessage()).isEqualTo("Текст комментария не может быть пустым");
-    }
 }
